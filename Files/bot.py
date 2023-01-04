@@ -2,6 +2,8 @@ import os
 import discord
 from discord.ext import commands
 import responses
+from content import *
+import random
 # Send messages
 
 with open('.env') as f:
@@ -29,7 +31,15 @@ def run_discord_bot():
   async def on_member_join(member):
     welcome_channel = discord.utils.get(member.guild.channels, name='welcome')
     await welcome_channel.send(f'Welcome to the server, {member.mention}!')
-   @client.event
+  @bot.command(pass_context = True)
+  async def randomjoke(ctx):
+    index = random.randint(0, 39)
+    text = jokes[index]
+    embed = discord.embed(
+        title = "Here is a Random Joke"
+        
+      )
+  @client.event
   async def on_message(message):
     if message.content.startswith('!membercount'):
       guild = message.guild
