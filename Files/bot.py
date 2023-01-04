@@ -20,19 +20,21 @@ async def send_message(message, user_message, is_private):
 
 
 def run_discord_bot():
-  Token = ""
   client = discord.Client(command_prefix=">", intents=discord.Intents.all())
   bot = commands.Bot(command_prefix = "!", intents = discord.Intents.all())
   @client.event
   async def on_ready():
     print(f'{client.user} is now running!')
-
   @client.event
   async def on_member_join(member):
     welcome_channel = discord.utils.get(member.guild.channels, name='welcome')
     await welcome_channel.send(f'Welcome to the server, {member.mention}!')
-
-  @client.event
+  @bot.commands(pass_contacts = True)
+  async def vote(ctx, *, message):
+    embed = discord.Embed(title = f"Poll Created by {ctx.author}", description = message, color = discord.Color.from_rgb(148, 216, 247))
+    embed.set_footer(text = f"Created by {ctx.author}")
+    send = await ctx.send(embed = embed)
+   @client.event
   async def on_message(message):
     if message.content.startswith('!membercount'):
       guild = message.guild
