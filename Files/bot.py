@@ -2,8 +2,6 @@ import os
 import discord
 from discord.ext import commands
 import responses
-import re
-
 # Send messages
 
 with open('.env') as f:
