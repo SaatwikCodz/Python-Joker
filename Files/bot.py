@@ -29,11 +29,6 @@ def run_discord_bot():
   async def on_member_join(member):
     welcome_channel = discord.utils.get(member.guild.channels, name='welcome')
     await welcome_channel.send(f'Welcome to the server, {member.mention}!')
-  @bot.commands(pass_contacts = True)
-  async def vote(ctx, *, message):
-    embed = discord.Embed(title = f"Poll Created by {ctx.author}", description = message, color = discord.Color.from_rgb(148, 216, 247))
-    embed.set_footer(text = f"Created by {ctx.author}")
-    send = await ctx.send(embed = embed)
    @client.event
   async def on_message(message):
     if message.content.startswith('!membercount'):
