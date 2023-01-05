@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 from content import *
 import random
+import responses
 # Send messages
 
 with open('.env') as f:
@@ -16,7 +17,6 @@ def run_discord_bot():
   index = 2
   print(jokes[index])
   client = commands.Bot(command_prefix="!", intents=discord.Intents.all())
-
   @client.event
   async def on_ready():
     print(f'{client.user} is now running!')
@@ -38,22 +38,25 @@ def run_discord_bot():
     await ctx.send(mess_channel, embed=embed)
   @client.event
   async def on_message(message):
-    if message.content.lower() == "hello":
-      message.channel.send("Hey There")
-    if message.content.lower() == "roll":
-      message.channel.send(f"{random.randint(1, 6)}")
-    if message.content.lower() == "help":
-      message.channel.send("You can go to the github page for help")
-    if message.content.lower() == "ban me":
-      message.channel.send("Sorry I can only do it if the server owners tell me to")
-    if message.content.lower() == "hey there":
-      message.channel.send("Hello")
-    if message.content.lower() == "gg":
-      message.channel.send("Keep Up, appreciate people more")
-    if message.content.lower() == "hi":
-      message.channel.send("Hey There")
-    if message.content.lower() == "!rules":
-      message.channel.send("The Format should be like !rules <SERVER NAME>")
+    if message.author.id == 1057619984009941083:
+      print("No message looping allowed")
+    else:
+      if message.content.lower() == "hello":
+        await message.channel.send("Hey There")
+      if message.content.lower() == "roll":
+        await message.channel.send(f"{random.randint(1, 6)}")
+      if message.content.lower() == "help":
+        await message.channel.send("You can go to the github page for help")
+      if message.content.lower() == "ban me":
+        await message.channel.send("Sorry I can only do it if the server owners tell me to")
+      if message.content.lower() == "hey there":
+        await message.channel.send("Hello User")
+      if message.content.lower() == "gg":
+        await message.channel.send("Keep Up, appreciate people more")
+      if message.content.lower() == "hi":
+        await message.channel.send("Hey There")
+      if message.content.lower() == "!rules":
+        await message.channel.send("The Format should be like !rules <SERVER NAME>")
     if message.content.startswith('!membercount'):
       guild = message.guild
       member_count = len(guild.members)
@@ -76,6 +79,11 @@ def run_discord_bot():
     # Make sure bot doesn't get stuck in an infinite loop
     if message.author == client.user:
       return
+    username = str(message.author)
+    user_message = str(message.content)
+    channel = str(message.channel)
+    # Debug printing
+    print(f"{username} said: '{user_message}' ({channel})")
 
   # Remember to run your bot with your personal TOKEN
   client.run(os.environ[key])
