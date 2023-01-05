@@ -6,6 +6,7 @@ from content import *
 import random
 # Send messages
 
+
 with open('.env') as f:
     for line in f:
         key, value = line.strip().split('=')
@@ -22,7 +23,7 @@ async def send_message(message, user_message, is_private):
 
 
 def run_discord_bot():
-  client = discord.Client(command_prefix=">", intents=discord.Intents.all())
+  client = discord.Bot(command_prefix="!", intents=discord.Intents.all())
   bot = commands.Bot(command_prefix = "!", intents = discord.Intents.all())
   @client.event
   async def on_ready():
@@ -33,13 +34,7 @@ def run_discord_bot():
     await welcome_channel.send(f'Welcome to the server, {member.mention}!')
   @bot.command(pass_context = True)
   async def randomjoke(ctx):
-    index = random.randint(0, 39)
-    text = jokes[index]
-    embed = discord.embed(
-        title = "Here is a Random Joke"
-        description = text
-        colour = discord.colour.from_rgb(99, 224, 159)
-      )
+    
     send = await ctx.send(embed = embed)
   @client.event
   async def on_message(message):
